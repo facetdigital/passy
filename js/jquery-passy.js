@@ -16,7 +16,7 @@
 		character: { DIGIT: 1, LOWERCASE: 2, UPPERCASE: 4, PUNCTUATION: 8 },
 		strength: { LOW: 0, MEDIUM: 1, HIGH: 2, EXTREME: 3 },
 
-		dictionary: [],
+		blackList: [],
 
 		patterns: [
 			'0123456789',
