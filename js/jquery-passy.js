@@ -69,67 +69,6 @@
         return $result;
 	};
 
-	passy.analizeCharacter = function(character) {
-		var code = character.charCodeAt(0);
-
-		if(code >= 97 && code <= 122) return 1;   // lower case
-		if(code >= 48 && code <= 57) return 2;    // numeric
-		if(code >= 65 && code <= 90) return 3;    // capital
-		if(code <= 126) return 4;                 // punctuation
-		return 5;                                 // foreign characters etc
-	};
-
-	passy.analizePattern = function(password, pattern) {
-		var lastmatch = -1;
-		var score = -2;
-
-		for(var i = 0; i < password.length; i++) {
-			var match = pattern.indexOf(password.charAt(i));
-
-			if(lastmatch === match - 1) {
-				lastmatch = match;
-				score++;
-			}
-		}
-
-		return Math.max(0, score);
-	};
-
-	passy.analizePatterns = function(password) {
-		var chars = password.toLowerCase();
-		var score = 0;
-
-		for(var i in $.passy.patterns) {
-			var pattern = $.passy.patterns[i].toLowerCase();
-			score += $.passy.analizePattern(chars, pattern);
-		}
-
-		// patterns are bad man!
-		return score * -5;
-	};
-
-	passy.analizeDictionary = function(password) {
-		var chars = password.toLowerCase();
-		var score = 0;
-
-		for(var i in $.passy.dictionary) {
-			var word = $.passy.dictionary[i].toLowerCase();
-
-			if(password.indexOf(word) >= 0) score++;
-		}
-
-		// using words are bad too!
-		return score * -5;
-	};
-
-	passy.analizeScore = function(score) {
-		if(score >= $.passy.threshold.extreme) return $.passy.strength.EXTREME;
-		if(score >= $.passy.threshold.high) return $.passy.strength.HIGH;
-		if(score >= $.passy.threshold.medium) return $.passy.strength.MEDIUM;
-
-		return $.passy.strength.LOW;
-	};
-
 	passy.generate = function(len) {
 		var chars = [
 			'0123456789',
