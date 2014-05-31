@@ -52,15 +52,21 @@
 	}
 
 	passy.analize = function(password) {
-		var score = Math.floor(password.length * 2);
-		var i = password.length;
+		var zStrength = zxcvbn(password, $.passy.blackList);
 
-		score += $.passy.analizePatterns(password);
-		score += $.passy.analizeDictionary(password);
+        $result = $.passy.strength.LOW;
+        if (zStrength.score == 3) {
+            $result = $.passy.strength.MEDIUM;
+        } else if (zStrength.score > 3) {
+            var crackTime = String(zStrength.crack_time_display);
+            if(crackTime.indexOf("centuries") !=-1) {
+                $result = $.passy.strength.EXTREME;
+            } else {
+                $result = $.passy.strength.HIGH;
+            }
+        }
 
-		while(i--) score += $.passy.analizeCharacter(password.charAt(i));
-
-		return $.passy.analizeScore(score);
+        return $result;
 	};
 
 	passy.analizeCharacter = function(character) {
