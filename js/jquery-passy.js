@@ -27,9 +27,9 @@
 		],
 
 		threshold: {
-			medium: 16,
-			high: 22,
-			extreme: 36
+			medium: 3,
+			high: 4,
+			extreme: 5
 		}
 	};
 
